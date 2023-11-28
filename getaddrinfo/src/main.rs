@@ -4,18 +4,20 @@ mod _types;
 use std::io::{self, Write};
 
 fn main() {
-    let mut domain = String::new();
+    let domain = &mut String::new();
     print!("Enter a domain to lookup: ");
     let _ = io::stdout().flush();
-    let input = io::stdin().read_line(&mut domain);
-    match input {
+    match io::stdin().read_line(domain) {
         Ok(_) => {},
         Err(_) => {
             println!("Failed to read input");
-            return ();
+            return;
         }
     }
-    let res = getaddrinfo::getaddrinfo("www.example.org");
+    let domain = domain.trim_end();
+    // println!("domain: {}", domain);
+
+    let res = getaddrinfo::getaddrinfo(domain);
     match res {
         Ok(addr) => {
             println!("IPv4 address for {} is: {}", domain.trim_end(), addr.to_string())

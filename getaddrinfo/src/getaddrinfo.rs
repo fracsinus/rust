@@ -21,6 +21,7 @@ extern "C" {
 // TODO: maybe io::Result is not appropriate
 pub fn getaddrinfo(domain: &str) -> io::Result<IpAddr> {
     let node = CString::new(domain)?;
+    // println!("node: {:?}", node);
     let service = CString::new("80")?;
     let hints = AddrInfo {
         ai_flags: 0,
